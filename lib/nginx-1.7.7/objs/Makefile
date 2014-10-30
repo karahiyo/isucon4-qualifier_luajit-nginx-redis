@@ -11,7 +11,7 @@ ALL_INCS = -I src/core \
 	-I src/os/unix \
 	-I /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_devel_kit/objs \
 	-I objs/addon/ndk \
-	-I /usr/local/include/luajit-2.0 \
+	-I /usr/local/Cellar/luajit/2.0.3_1/include/luajit-2.0 \
 	-I /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/lua-nginx-module/src/api \
 	-I objs \
 	-I src/http \
@@ -86,7 +86,7 @@ CORE_INCS = -I src/core \
 	-I src/os/unix \
 	-I /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_devel_kit/objs \
 	-I objs/addon/ndk \
-	-I /usr/local/include/luajit-2.0 \
+	-I /usr/local/Cellar/luajit/2.0.3_1/include/luajit-2.0 \
 	-I /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/lua-nginx-module/src/api \
 	-I objs
 
@@ -434,7 +434,7 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/addon/src/ngx_http_lua_config.o \
 	objs/addon/src/ngx_http_lua_worker.o \
 	objs/ngx_modules.o \
-	-L/usr/local/opt/pcre/lib -L/usr/local/lib -lluajit-5.1 -lm -lpcre -lcrypto -lcrypto -lz
+	-L/usr/local/opt/pcre/lib -L/usr/local/Cellar/luajit/2.0.3_1/lib -lluajit-5.1 -lm -pagezero_size 10000 -image_base 100000000 -lpcre -lcrypto -lcrypto -lz
 	
 
 
