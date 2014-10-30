@@ -8,10 +8,10 @@ PCRE_LIB=/usr/local/opt/pcre
 NGINX=$(PWD)/nginx/sbin/nginx
 
 start:
-	$(NGINX) -c $(PWD)/nginx/nginx.conf
+	$(NGINX) -c $(PWD)/nginx.conf
 
 restart:
-	$(NGINX) -c $(PWD)/nginx/nginx.conf -s reload
+	$(NGINX) -c $(PWD)/nginx.conf -s reload
 
 stop:
 	$(NGINX) -s stop
