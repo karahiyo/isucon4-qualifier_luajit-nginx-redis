@@ -3,6 +3,7 @@ logs
 nginx
 lib/nginx*/objs/nginx
 ngx_auto_config.h
+db
 
 # Object files
 *.o

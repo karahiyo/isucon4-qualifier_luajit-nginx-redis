@@ -6,6 +6,7 @@ isucon4 with luajit + nginx
 ```
 $ brew install pcre
 $ brew install luajit
+$ brew install redis
 $ make install
 $ make start
 ```

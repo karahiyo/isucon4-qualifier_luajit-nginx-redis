@@ -47,3 +47,7 @@ setup:
 
 clean-all:
 	test -d $(PWD)/nginx || rm -rf $(PWD)/nginx
+
+redis-start:
+	redis-server redis.conf
+
