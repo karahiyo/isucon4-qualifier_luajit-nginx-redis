@@ -1,7 +1,8 @@
-nginx/run
-nginx/logs
-nginx/sbin
+run
+logs
+nginx
 lib/nginx*/objs/nginx
+ngx_auto_config.h
 
 # Object files
 *.o
