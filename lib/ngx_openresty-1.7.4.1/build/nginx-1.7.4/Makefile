@@ -12,10 +12,10 @@ install:
 	$(MAKE) -f objs/Makefile install
 
 upgrade:
-	/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin/nginx -t
+	/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin/nginx -t
 
-	kill -USR2 `cat /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs/nginx.pid`
+	kill -USR2 `cat /home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs/nginx.pid`
 	sleep 1
-	test -f /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs/nginx.pid.oldbin
+	test -f /home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs/nginx.pid.oldbin
 
-	kill -QUIT `cat /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs/nginx.pid.oldbin`
+	kill -QUIT `cat /home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs/nginx.pid.oldbin`

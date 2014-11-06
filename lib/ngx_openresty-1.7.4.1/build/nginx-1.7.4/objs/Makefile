@@ -1,6 +1,6 @@
 
 CC =	cc
-CFLAGS =  -pipe  -O -Wall -Wextra -Wpointer-arith -Wconditional-uninitialized -Wno-unused-parameter -Wno-deprecated-declarations -g -I/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/luajit/include/luajit-2.1 -O2 -O0 -I/usr/local/opt/pcre/include -DNDK_SET_VAR -DNDK_UPSTREAM_LIST -DNDK_SET_VAR -DNDK_SET_VAR -DNDK_SET_VAR -DLUA_DEFAULT_PATH='"/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/lualib/?.lua;/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/lualib/?/init.lua"' -DLUA_DEFAULT_CPATH='"/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/lualib/?.so"' -DNDK_SET_VAR
+CFLAGS =  -pipe  -O -W -Wall -Wpointer-arith -Wno-unused-parameter -g -I/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/include/luajit-2.1 -O2 -O0 -I/include -DNDK_SET_VAR -DNDK_UPSTREAM_LIST -DNDK_SET_VAR -DNDK_SET_VAR -DNDK_SET_VAR -DLUA_DEFAULT_PATH='"/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.lua;/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?/init.lua"' -DLUA_DEFAULT_CPATH='"/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.so"' -DNDK_SET_VAR
 CPP =	cc -E
 LINK =	$(CC)
 
@@ -13,7 +13,7 @@ ALL_INCS = -I src/core \
 	-I src/os/unix \
 	-I ../ngx_devel_kit-0.2.19/objs \
 	-I objs/addon/ndk \
-	-I /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/luajit/include/luajit-2.1 \
+	-I /home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/include/luajit-2.1 \
 	-I ../ngx_lua-0.9.12/src/api \
 	-I objs \
 	-I src/http \
@@ -78,8 +78,8 @@ CORE_DEPS = src/core/nginx.h \
 	src/os/unix/ngx_os.h \
 	src/os/unix/ngx_user.h \
 	src/os/unix/ngx_process_cycle.h \
-	src/os/unix/ngx_darwin_config.h \
-	src/os/unix/ngx_darwin.h \
+	src/os/unix/ngx_linux_config.h \
+	src/os/unix/ngx_linux.h \
 	src/event/ngx_event_openssl.h \
 	src/core/ngx_regex.h \
 	objs/ngx_auto_config.h
@@ -93,7 +93,7 @@ CORE_INCS = -I src/core \
 	-I src/os/unix \
 	-I ../ngx_devel_kit-0.2.19/objs \
 	-I objs/addon/ndk \
-	-I /Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/luajit/include/luajit-2.1 \
+	-I /home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/include/luajit-2.1 \
 	-I ../ngx_lua-0.9.12/src/api \
 	-I objs
 
@@ -178,9 +178,9 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/src/os/unix/ngx_posix_init.o \
 	objs/src/os/unix/ngx_user.o \
 	objs/src/os/unix/ngx_process_cycle.o \
-	objs/src/os/unix/ngx_darwin_init.o \
-	objs/src/event/modules/ngx_kqueue_module.o \
-	objs/src/os/unix/ngx_darwin_sendfile_chain.o \
+	objs/src/os/unix/ngx_linux_init.o \
+	objs/src/event/modules/ngx_epoll_module.o \
+	objs/src/os/unix/ngx_linux_sendfile_chain.o \
 	objs/src/event/ngx_event_openssl.o \
 	objs/src/event/ngx_event_openssl_stapling.o \
 	objs/src/core/ngx_regex.o \
@@ -411,9 +411,9 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/src/os/unix/ngx_posix_init.o \
 	objs/src/os/unix/ngx_user.o \
 	objs/src/os/unix/ngx_process_cycle.o \
-	objs/src/os/unix/ngx_darwin_init.o \
-	objs/src/event/modules/ngx_kqueue_module.o \
-	objs/src/os/unix/ngx_darwin_sendfile_chain.o \
+	objs/src/os/unix/ngx_linux_init.o \
+	objs/src/event/modules/ngx_epoll_module.o \
+	objs/src/os/unix/ngx_linux_sendfile_chain.o \
 	objs/src/event/ngx_event_openssl.o \
 	objs/src/event/ngx_event_openssl_stapling.o \
 	objs/src/core/ngx_regex.o \
@@ -585,7 +585,7 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/addon/src/ngx_http_rds_csv_util.o \
 	objs/addon/src/ngx_http_rds_csv_output.o \
 	objs/ngx_modules.o \
-	-Wl,-rpath,/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/luajit/lib -L/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/luajit/lib -L/usr/local/opt/pcre/lib -L/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/luajit/lib -lluajit-5.1 -lm -pagezero_size 10000 -image_base 100000000 -lpcre -lssl -lcrypto -lz
+	-Wl,-rpath,/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/lib -L/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/lib -L/lib -Wl,-E -lpthread -lcrypt -L/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/lib -lluajit-5.1 -lm -lpcre -lssl -lcrypto -ldl -lz
 	
 
 
@@ -995,25 +995,25 @@ objs/src/os/unix/ngx_process_cycle.o:	$(CORE_DEPS) \
 		src/os/unix/ngx_process_cycle.c
 
 
-objs/src/os/unix/ngx_darwin_init.o:	$(CORE_DEPS) \
-	src/os/unix/ngx_darwin_init.c
+objs/src/os/unix/ngx_linux_init.o:	$(CORE_DEPS) \
+	src/os/unix/ngx_linux_init.c
 	$(CC) -c $(CFLAGS) $(CORE_INCS) \
-		-o objs/src/os/unix/ngx_darwin_init.o \
-		src/os/unix/ngx_darwin_init.c
+		-o objs/src/os/unix/ngx_linux_init.o \
+		src/os/unix/ngx_linux_init.c
 
 
-objs/src/event/modules/ngx_kqueue_module.o:	$(CORE_DEPS) \
-	src/event/modules/ngx_kqueue_module.c
+objs/src/event/modules/ngx_epoll_module.o:	$(CORE_DEPS) \
+	src/event/modules/ngx_epoll_module.c
 	$(CC) -c $(CFLAGS) $(CORE_INCS) \
-		-o objs/src/event/modules/ngx_kqueue_module.o \
-		src/event/modules/ngx_kqueue_module.c
+		-o objs/src/event/modules/ngx_epoll_module.o \
+		src/event/modules/ngx_epoll_module.c
 
 
-objs/src/os/unix/ngx_darwin_sendfile_chain.o:	$(CORE_DEPS) \
-	src/os/unix/ngx_darwin_sendfile_chain.c
+objs/src/os/unix/ngx_linux_sendfile_chain.o:	$(CORE_DEPS) \
+	src/os/unix/ngx_linux_sendfile_chain.c
 	$(CC) -c $(CFLAGS) $(CORE_INCS) \
-		-o objs/src/os/unix/ngx_darwin_sendfile_chain.o \
-		src/os/unix/ngx_darwin_sendfile_chain.c
+		-o objs/src/os/unix/ngx_linux_sendfile_chain.o \
+		src/os/unix/ngx_linux_sendfile_chain.c
 
 
 objs/src/event/ngx_event_openssl.o:	$(CORE_DEPS) \
@@ -2209,47 +2209,47 @@ objs/addon/src/ngx_http_rds_csv_output.o:	$(ADDON_DEPS) \
 manpage:	objs/nginx.8
 
 objs/nginx.8:	man/nginx.8 objs/ngx_auto_config.h
-	sed -e "s|%%PREFIX%%|/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx|" \
-		-e "s|%%PID_PATH%%|/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs/nginx.pid|" \
-		-e "s|%%CONF_PATH%%|/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/nginx.conf|" \
-		-e "s|%%ERROR_LOG_PATH%%|/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs/error.log|" \
+	sed -e "s|%%PREFIX%%|/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx|" \
+		-e "s|%%PID_PATH%%|/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs/nginx.pid|" \
+		-e "s|%%CONF_PATH%%|/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/nginx.conf|" \
+		-e "s|%%ERROR_LOG_PATH%%|/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs/error.log|" \
 		< man/nginx.8 > $@
 
 install:	objs/nginx 		
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx' || mkdir -p '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx' || mkdir -p '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx'
 
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin' 		|| mkdir -p '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin'
-	test ! -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin/nginx' 		|| mv '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin/nginx' 			'$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin/nginx.old'
-	cp objs/nginx '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/sbin/nginx'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin' 		|| mkdir -p '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin'
+	test ! -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin/nginx' 		|| mv '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin/nginx' 			'$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin/nginx.old'
+	cp objs/nginx '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/sbin/nginx'
 
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf' 		|| mkdir -p '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf' 		|| mkdir -p '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
 
-	cp conf/koi-win '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/koi-utf '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/win-utf '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
+	cp conf/koi-win '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/koi-utf '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/win-utf '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
 
-	test -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/mime.types' 		|| cp conf/mime.types '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/mime.types '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/mime.types.default'
+	test -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/mime.types' 		|| cp conf/mime.types '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/mime.types '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/mime.types.default'
 
-	test -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/fastcgi_params' 		|| cp conf/fastcgi_params '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/fastcgi_params 		'$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/fastcgi_params.default'
+	test -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/fastcgi_params' 		|| cp conf/fastcgi_params '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/fastcgi_params 		'$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/fastcgi_params.default'
 
-	test -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/fastcgi.conf' 		|| cp conf/fastcgi.conf '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/fastcgi.conf '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/fastcgi.conf.default'
+	test -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/fastcgi.conf' 		|| cp conf/fastcgi.conf '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/fastcgi.conf '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/fastcgi.conf.default'
 
-	test -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/uwsgi_params' 		|| cp conf/uwsgi_params '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/uwsgi_params 		'$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/uwsgi_params.default'
+	test -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/uwsgi_params' 		|| cp conf/uwsgi_params '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/uwsgi_params 		'$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/uwsgi_params.default'
 
-	test -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/scgi_params' 		|| cp conf/scgi_params '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf'
-	cp conf/scgi_params 		'$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/scgi_params.default'
+	test -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/scgi_params' 		|| cp conf/scgi_params '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf'
+	cp conf/scgi_params 		'$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/scgi_params.default'
 
-	test -f '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/nginx.conf' 		|| cp conf/nginx.conf '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/nginx.conf'
-	cp conf/nginx.conf '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/conf/nginx.conf.default'
+	test -f '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/nginx.conf' 		|| cp conf/nginx.conf '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/nginx.conf'
+	cp conf/nginx.conf '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/conf/nginx.conf.default'
 
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs' 		|| mkdir -p '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs' 		|| mkdir -p '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs'
 
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs' || 		mkdir -p '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs' || 		mkdir -p '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs'
 
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/html' 		|| cp -R html '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/html' 		|| cp -R html '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx'
 
-	test -d '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs' || 		mkdir -p '$(DESTDIR)/Users/yu_ke/workspace/ISUCON2014/isucon4_luajit+nginx/nginx/nginx/logs'
+	test -d '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs' || 		mkdir -p '$(DESTDIR)/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/nginx/logs'
