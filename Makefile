@@ -8,13 +8,13 @@ NGINX=$(PWD)/nginx/sbin/nginx
 ENV=$(shell echo LUAJIT_LIB=$(LUAJIT_LIB) LUAJIT_INC=$(LUAJIT_INC))
 
 start:
-	$(NGINX) -c $(PWD)/nginx.conf
+	$(NGINX) -c $(PWD)/nginx.conf -p $(PWD)
 
 restart:
-	$(NGINX) -c $(PWD)/nginx.conf -s reload
+	$(NGINX) -c $(PWD)/nginx.conf -s reload -p $(PWD)
 
 stop:
-	$(NGINX) -c $(PWD)/nginx.conf -s stop
+	$(NGINX) -c $(PWD)/nginx.conf -s stop -p $(PWD)
 
 status:
 	ps aux | grep nginx
@@ -34,6 +34,9 @@ setup:
 
 __clean:
 	test -d $(PWD)/nginx || rm -rf $(PWD)/nginx
+	test -d $(PWD)/luajit || rm -rf $(PWD)/luajit
+	test -d $(PWD)/lualib || rm -rf $(PWD)/lualib
+	test -d $(PWD)/bin || rm -rf $(PWD)/bin
 
 start-redis:
 	redis-server redis.conf
