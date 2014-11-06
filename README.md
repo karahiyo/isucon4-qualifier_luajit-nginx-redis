@@ -1,13 +1,4 @@
-isucon4 with luajit + nginx
-========================================
+isucon4 with luajit + nginx + openresty + redis
+==================================================
 
-# Quick Start
-
-```
-$ brew install pcre
-$ brew install luajit
-$ brew install redis
-$ make install
-$ make start
-```
 

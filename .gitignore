@@ -1,6 +1,9 @@
 run
 logs
 nginx
+bin
+luajit
+lualib
 lib/nginx*/objs/nginx
 ngx_auto_config.h
 db
