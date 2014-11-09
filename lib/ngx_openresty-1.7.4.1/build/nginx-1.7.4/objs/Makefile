@@ -1,6 +1,6 @@
 
 CC =	cc
-CFLAGS =  -pipe  -O -W -Wall -Wpointer-arith -Wno-unused-parameter -g -I/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/include/luajit-2.1 -O2 -O0 -I/include -DNDK_SET_VAR -DNDK_UPSTREAM_LIST -DNDK_SET_VAR -DNDK_SET_VAR -DNDK_SET_VAR -DLUA_DEFAULT_PATH='"/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.lua;/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?/init.lua"' -DLUA_DEFAULT_CPATH='"/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.so"' -DNDK_SET_VAR
+CFLAGS =  -pipe  -O -W -Wall -Wpointer-arith -Wno-unused-parameter -g -I/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lib/ngx_openresty-1.7.4.1/build/luajit-root/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/luajit/include/luajit-2.1 -DNGX_LUA_USE_ASSERT -DNGX_LUA_ABORT_AT_PANIC -O2 -O0 -I/include -DNDK_SET_VAR -DNDK_UPSTREAM_LIST -DNDK_SET_VAR -DNDK_SET_VAR -DNDK_SET_VAR -DLUA_DEFAULT_PATH='"/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.lua;/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?/init.lua"' -DLUA_DEFAULT_CPATH='"/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.so"' -DNDK_SET_VAR
 CPP =	cc -E
 LINK =	$(CC)
 
@@ -217,7 +217,6 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/src/http/modules/ngx_http_access_module.o \
 	objs/src/http/modules/ngx_http_limit_conn_module.o \
 	objs/src/http/modules/ngx_http_limit_req_module.o \
-	objs/src/http/modules/ngx_http_geo_module.o \
 	objs/src/http/modules/ngx_http_map_module.o \
 	objs/src/http/modules/ngx_http_split_clients_module.o \
 	objs/src/http/modules/ngx_http_referer_module.o \
@@ -228,7 +227,6 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/src/http/modules/ngx_http_uwsgi_module.o \
 	objs/src/http/modules/ngx_http_scgi_module.o \
 	objs/src/http/modules/ngx_http_memcached_module.o \
-	objs/src/http/modules/ngx_http_empty_gif_module.o \
 	objs/src/http/modules/ngx_http_browser_module.o \
 	objs/src/http/modules/ngx_http_upstream_hash_module.o \
 	objs/src/http/modules/ngx_http_upstream_ip_hash_module.o \
@@ -450,7 +448,6 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/src/http/modules/ngx_http_access_module.o \
 	objs/src/http/modules/ngx_http_limit_conn_module.o \
 	objs/src/http/modules/ngx_http_limit_req_module.o \
-	objs/src/http/modules/ngx_http_geo_module.o \
 	objs/src/http/modules/ngx_http_map_module.o \
 	objs/src/http/modules/ngx_http_split_clients_module.o \
 	objs/src/http/modules/ngx_http_referer_module.o \
@@ -461,7 +458,6 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/src/http/modules/ngx_http_uwsgi_module.o \
 	objs/src/http/modules/ngx_http_scgi_module.o \
 	objs/src/http/modules/ngx_http_memcached_module.o \
-	objs/src/http/modules/ngx_http_empty_gif_module.o \
 	objs/src/http/modules/ngx_http_browser_module.o \
 	objs/src/http/modules/ngx_http_upstream_hash_module.o \
 	objs/src/http/modules/ngx_http_upstream_ip_hash_module.o \
@@ -1268,13 +1264,6 @@ objs/src/http/modules/ngx_http_limit_req_module.o:	$(CORE_DEPS) $(HTTP_DEPS) \
 		src/http/modules/ngx_http_limit_req_module.c
 
 
-objs/src/http/modules/ngx_http_geo_module.o:	$(CORE_DEPS) $(HTTP_DEPS) \
-	src/http/modules/ngx_http_geo_module.c
-	$(CC) -c $(CFLAGS) $(CORE_INCS) $(HTTP_INCS) \
-		-o objs/src/http/modules/ngx_http_geo_module.o \
-		src/http/modules/ngx_http_geo_module.c
-
-
 objs/src/http/modules/ngx_http_map_module.o:	$(CORE_DEPS) $(HTTP_DEPS) \
 	src/http/modules/ngx_http_map_module.c
 	$(CC) -c $(CFLAGS) $(CORE_INCS) $(HTTP_INCS) \
@@ -1343,13 +1332,6 @@ objs/src/http/modules/ngx_http_memcached_module.o:	$(CORE_DEPS) $(HTTP_DEPS) \
 	$(CC) -c $(CFLAGS) $(CORE_INCS) $(HTTP_INCS) \
 		-o objs/src/http/modules/ngx_http_memcached_module.o \
 		src/http/modules/ngx_http_memcached_module.c
-
-
-objs/src/http/modules/ngx_http_empty_gif_module.o:	$(CORE_DEPS) $(HTTP_DEPS) \
-	src/http/modules/ngx_http_empty_gif_module.c
-	$(CC) -c $(CFLAGS) $(CORE_INCS) $(HTTP_INCS) \
-		-o objs/src/http/modules/ngx_http_empty_gif_module.o \
-		src/http/modules/ngx_http_empty_gif_module.c
 
 
 objs/src/http/modules/ngx_http_browser_module.o:	$(CORE_DEPS) $(HTTP_DEPS) \

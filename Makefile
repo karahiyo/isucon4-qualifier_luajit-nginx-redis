@@ -8,13 +8,13 @@ NGINX=$(PWD)/nginx/sbin/nginx
 ENV=$(shell echo LUAJIT_LIB=$(LUAJIT_LIB) LUAJIT_INC=$(LUAJIT_INC))
 
 start:
-	$(NGINX) -c $(PWD)/nginx.conf -p $(PWD)
+	$(NGINX) -c $(PWD)/nginx.conf
 
 restart:
-	$(NGINX) -c $(PWD)/nginx.conf -s reload -p $(PWD)
+	$(NGINX) -c $(PWD)/nginx.conf -s reload
 
 stop:
-	$(NGINX) -c $(PWD)/nginx.conf -s stop -p $(PWD)
+	$(NGINX) -c $(PWD)/nginx.conf -s stop
 
 status:
 	ps aux | grep nginx
@@ -25,6 +25,13 @@ install: setup
 		--with-cc-opt="-O0 -I$(PCRE_LIB)/include" \
 		--with-ld-opt="-L$(PCRE_LIB)/lib" \
 		--with-luajit  \
+		--with-pcre \
+		--with-debug \
+		--without-http_geo_module \
+		--without-http_empty_gif_module \
+		--without-mail_pop3_module \
+		--without-mail_imap_module \
+		--without-mail_smtp_module \
 		-j2
 	make -C $(PWD)/lib/ngx_openresty
 	make -C $(PWD)/lib/ngx_openresty install

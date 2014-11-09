@@ -23,7 +23,6 @@ extern ngx_module_t  ngx_http_auth_basic_module;
 extern ngx_module_t  ngx_http_access_module;
 extern ngx_module_t  ngx_http_limit_conn_module;
 extern ngx_module_t  ngx_http_limit_req_module;
-extern ngx_module_t  ngx_http_geo_module;
 extern ngx_module_t  ngx_http_map_module;
 extern ngx_module_t  ngx_http_split_clients_module;
 extern ngx_module_t  ngx_http_referer_module;
@@ -34,7 +33,6 @@ extern ngx_module_t  ngx_http_fastcgi_module;
 extern ngx_module_t  ngx_http_uwsgi_module;
 extern ngx_module_t  ngx_http_scgi_module;
 extern ngx_module_t  ngx_http_memcached_module;
-extern ngx_module_t  ngx_http_empty_gif_module;
 extern ngx_module_t  ngx_http_browser_module;
 extern ngx_module_t  ngx_http_upstream_hash_module;
 extern ngx_module_t  ngx_http_upstream_ip_hash_module;
@@ -91,7 +89,6 @@ ngx_module_t *ngx_modules[] = {
     &ngx_http_access_module,
     &ngx_http_limit_conn_module,
     &ngx_http_limit_req_module,
-    &ngx_http_geo_module,
     &ngx_http_map_module,
     &ngx_http_split_clients_module,
     &ngx_http_referer_module,
@@ -102,7 +99,6 @@ ngx_module_t *ngx_modules[] = {
     &ngx_http_uwsgi_module,
     &ngx_http_scgi_module,
     &ngx_http_memcached_module,
-    &ngx_http_empty_gif_module,
     &ngx_http_browser_module,
     &ngx_http_upstream_hash_module,
     &ngx_http_upstream_ip_hash_module,
