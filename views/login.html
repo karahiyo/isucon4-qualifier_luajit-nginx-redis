@@ -13,7 +13,9 @@
   <h1>ログイン</h1>
 </div>
 
+{% if notice then %}
 <div id="notice-message" class="alert alert-danger" role="alert">{{notice}}</div>
+{% end %}
 
 <div class="container">
   <form class="form-horizontal" role="form" action="/login" method="POST">
