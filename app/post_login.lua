@@ -1,3 +1,4 @@
+local util = require "utils"
 local json = require "resty.libcjson"
 local redis = require("resty.redis").new()
 local session = require("resty.session").start()
@@ -14,21 +15,8 @@ end
 ngx.req.read_body()
 local args,err = ngx.req.get_post_args()
 
-function redis_key_user(login)
-    return "isu4:user:"..login
-end
-function redis_key_ip(ip)
-    return "isu4:ip:"..ip
-end
-function redis_key_last(login)
-    return "isu4:last:"..login
-end
-function redis_key_next_last(login)
-    return "isu4:next_last:"..login
-end
-
 function get_user(login)
-    local res = redis:hgetall(redis_key_user(login))
+    local res = redis:hgetall(util:redis_key_user(login))
     if not res then
         return
     end
@@ -39,8 +27,8 @@ function attempt_login(login, password)
     local user = get_user(login)
 
     if user and user.password == password then
-        local klast = redis_key_last(login)
-        local knext_last = redis_key_next_last(login)
+        local klast = util:redis_key_last(login)
+        local knext_last = util:redis_key_next_last(login)
         pcall(redis:rename(knext_last, klast))
         redis:hmset(knext_last, {at=ngx.localtime(), ip=ngx.var.remote_addr })
         return {login = user.login}
