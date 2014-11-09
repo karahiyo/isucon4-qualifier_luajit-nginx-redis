@@ -23,16 +23,26 @@ function get_user(login)
     return redis:array_to_hash(res)
 end
 
+-- TODO: evalsha incr script
 function attempt_login(login, password)
     local user = get_user(login)
 
+    local kip  = util:redis_key_ip(ngx.var.remote_addr)
+    local kuser_fail = util:redis_key_user_fail(login)
     if user and user.password == password then
         local klast = util:redis_key_last(login)
         local knext_last = util:redis_key_next_last(login)
         pcall(redis:rename(knext_last, klast))
         redis:hmset(knext_last, {at=ngx.localtime(), ip=ngx.var.remote_addr })
+        redis:mset(kip, 0, kuser_fail, 0)
+        ngx.log(ngx.ERR, "** bunned ip count: ", redis:get(kip))
+        ngx.log(ngx.ERR, "** locked user count: ", redis:get(kuser_fail))
         return {login = user.login}
-    else 
+    else
+        redis:incr(kip)
+        redis:incr(kuser_fail)
+        ngx.log(ngx.ERR, "** bunned ip count: ", redis:get(kip))
+        ngx.log(ngx.ERR, "** locked user count: ", redis:get(kuser_fail))
         return _, "Wrong username or password"
     end
 end

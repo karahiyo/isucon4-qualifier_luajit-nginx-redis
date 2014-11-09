@@ -3,6 +3,9 @@ local util = {}
 function util:redis_key_user(login)
     return "isu4:user:"..login
 end
+function util:redis_key_user_fail(login)
+    return "isu4:user_fail:"..login
+end
 function util:redis_key_ip(ip)
     return "isu4:ip:"..ip
 end
