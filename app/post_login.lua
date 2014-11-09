@@ -42,7 +42,7 @@ function attempt_login(login, password)
         local klast = redis_key_last(login)
         local knext_last = redis_key_next_last(login)
         pcall(redis:rename(knext_last, klast))
-        redis:hmset(knext_last, {at=ngx.now(), ip=ngx.var.remote_addr })
+        redis:hmset(knext_last, {at=ngx.localtime(), ip=ngx.var.remote_addr })
         return {login = user.login}
     else 
         return _, "Wrong username or password"
