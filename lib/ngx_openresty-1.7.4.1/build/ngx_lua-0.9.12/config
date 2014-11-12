@@ -363,5 +363,5 @@ ngx_feature_test='setsockopt(1, SOL_SOCKET, SO_PASSCRED, NULL, 0);'
 
 
 ngx_lua_dquote='"'
-CFLAGS="$CFLAGS -DLUA_DEFAULT_PATH='$ngx_lua_dquote/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.lua;/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?/init.lua$ngx_lua_dquote'"
-CFLAGS="$CFLAGS -DLUA_DEFAULT_CPATH='$ngx_lua_dquote/home/vagrant/isucon/isucon4-qualifier_luajit-nginx/lualib/?.so$ngx_lua_dquote'"
+CFLAGS="$CFLAGS -DLUA_DEFAULT_PATH='$ngx_lua_dquote/home/isucon/isucon4-qualifier_luajit-nginx-redis/lualib/?.lua;/home/isucon/isucon4-qualifier_luajit-nginx-redis/lualib/?/init.lua$ngx_lua_dquote'"
+CFLAGS="$CFLAGS -DLUA_DEFAULT_CPATH='$ngx_lua_dquote/home/isucon/isucon4-qualifier_luajit-nginx-redis/lualib/?.so$ngx_lua_dquote'"
