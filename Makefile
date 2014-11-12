@@ -38,6 +38,9 @@ install: setup
 
 setup:
 	test -d nginx || mkdir nginx
+	test -d /tmp/isucon/logs || mkdir -p /tmp/isucon/logs
+	test -d /tmp/isucon/run || mkdir -p /tmp/isucon/run
+	test -d $(PWD)/db || mkdir $(PWD)/db
 
 __clean:
 	test -d $(PWD)/nginx || rm -rf $(PWD)/nginx
