@@ -51,7 +51,7 @@ if not ok then
     new_tab = function (narr, nrec) return {} end
 end
 
-local cjson = ffi_load("/usr/local/luajit/lib/lua/5.1/libcjson.so")
+local cjson = ffi_load("libcjson.so")
 local json = new_tab(0, 6)
 local char_t = ffi_typeof("char[?]")
 local mt_arr = { __index = { __jsontype = "array"  }}
