@@ -1,7 +1,7 @@
 local util = require "utils"
 local json = require "resty.libcjson"
-local redis = require("resty.redis").new()
-local session = require("resty.session").start()
+local redis = require "resty.redis" .new()
+local session = require "resty.session" .start()
 local conf = require '../app/config'
 
 -- timeout: 1s
