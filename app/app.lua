@@ -31,14 +31,14 @@ function app:key_next_last(login)
     return "ise4:next_last:"..login
 end
 function app:get_user(login)
-    local res = self.redis:hgetall(app:key_user(login))
+    local res = self.redis:hgetall(self:key_user(login))
     if not res then
         return
     end
     return self.redis:array_to_hash(res)
 end
 function app:ip_banned()
-    local kip = app:key_ip(ngx.var.remote_addr)
+    local kip = self:key_ip(ngx.var.remote_addr)
     local fail_count = tonumber(self.redis:get(kip))
     if not fail_count then
         return false
@@ -46,7 +46,7 @@ function app:ip_banned()
     return fail_count >= conf.user_lock_threshold
 end
 function app:user_locked(login)
-    local kuser_fail = app:key_user_fail(login)
+    local kuser_fail = self:key_user_fail(login)
     local fail_count = tonumber(self.redis:get(kuser_fail))
     if not fail_count then
         return false
@@ -55,9 +55,12 @@ function app:user_locked(login)
 end
 
 function app:attempt_login(login, password)
-    local user = app:get_user(login)
+    if not login or not password then
+        return _, "Wrong username or password"
+    end
+    local user = self:get_user(login)
 
-    if app:ip_banned() then
+    if self:ip_banned() then
         ngx.log(ngx.ERR, "** ip bunned")
         return _, "You're banned."
     end
@@ -66,11 +69,11 @@ function app:attempt_login(login, password)
         return _, "This account is locked."
     end
 
-    local kip  = app:key_ip(ngx.var.remote_addr)
-    local kuser_fail = app:key_user_fail(login)
+    local kip  = self:key_ip(ngx.var.remote_addr)
+    local kuser_fail = self:key_user_fail(login)
     if user and user.password == password then
-        local klast = app:key_last(login)
-        local knext_last = app:key_next_last(login)
+        local klast = self:key_last(login)
+        local knext_last = self:key_next_last(login)
         pcall(self.redis:rename(knext_last, klast))
         self.redis:hmset(knext_last, {at=ngx.localtime(), ip=ngx.var.remote_addr })
         self.redis:mset(kip, 0, kuser_fail, 0)
