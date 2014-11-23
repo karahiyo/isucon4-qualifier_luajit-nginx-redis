@@ -55,6 +55,7 @@ function app:user_locked(login)
 end
 
 function app:attempt_login(login, password)
+    local MINCR = self.redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
     if not login or not password then
         return _, "Wrong username or password"
     end
@@ -79,10 +80,9 @@ function app:attempt_login(login, password)
         self.redis:mset(kip, 0, kuser_fail, 0)
         return {login = user.login}
     else
-        self.redis:incr(kip)
-        self.redis:incr(kuser_fail)
-        ngx.log(ngx.ERR, "** bunned ip count: ", self.redis:get(kip))
-        ngx.log(ngx.ERR, "** locked user count: ", self.redis:get(kuser_fail))
+        self.redis:evalsha(MINCR, 2, kip, kuser_fail)
+        ngx.log(ngx.ERR, "** bunned ip count: ",kip,"=",self.redis:get(kip))
+        ngx.log(ngx.ERR, "** locked user count: ",kuser_fail,"=",self.redis:get(kuser_fail))
         return _, "Wrong username or password"
     end
 end
