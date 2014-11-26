@@ -15,6 +15,14 @@ function app:start(_host,_port)
     end
 end
 
+function app:get_ip()
+	local ip = ngx.var.remote_addr
+	local xff = ngx.var.http_x_forwarded_for
+	if xff and ip == "127.0.0.1" then
+		return xff
+	end
+	return ip
+end
 function app:key_user(login)
     return "isu4:user:"..login
 end
@@ -38,7 +46,7 @@ function app:get_user(login)
     return self.redis:array_to_hash(res)
 end
 function app:ip_banned()
-    local kip = self:key_ip(ngx.var.remote_addr)
+    local kip = self:key_ip(self:get_ip())
     local fail_count = tonumber(self.redis:get(kip))
     if not fail_count then
         return false
@@ -53,7 +61,15 @@ function app:user_locked(login)
     end
     return fail_count >= conf.ip_ban_threshold
 end
-
+function app:calc_password_hash(password, salt)
+ if not password or not salt then
+         return ""
+ end
+ sha256:update(password..":"..salt)
+ local digest = sha256:final()
+ local ret = str.to_hex(digest)
+ return ret
+end
 function app:attempt_login(login, password)
     local MINCR = self.redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
     if not login or not password then
