@@ -17,4 +17,4 @@ if [ "_${usercnt}" != "_200000" ]; then
   mysql -h ${myhost} -P ${myport} -u ${myuser} ${mydb} < sql/dummy_log.sql
 fi
 
-BUNDLE_GEMFILE=/home/isucon/webapp/ruby/Gemfile ruby -rbundler/setup /home/isucon/webapp/init.redis.rb
+BUNDLE_GEMFILE=./Gemfile ruby -rbundler/setup ./init.redis.rb
