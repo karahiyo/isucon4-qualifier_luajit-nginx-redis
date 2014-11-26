@@ -1,0 +1,10 @@
+INSERT INTO `users` (`id`, `login`, `password`) VALUES
+(1, 'isucon1',  'isuconpass1')
+,(2, 'isucon2', 'isuconpass2')
+,(3, 'isucon3', 'isuconpass3')
+,(4, 'isucon4', 'isuconpass4')
+,(5, 'isucon5', 'isuconpass5')
+,(6, 'isucon6', 'isuconpass6')
+,(7, 'isucon7', 'isuconpass7')
+,(8, 'isucon8', 'isuconpass8')
+,(9, 'isucon9', 'isuconpass9')
