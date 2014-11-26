@@ -53,7 +53,15 @@ function app:user_locked(login)
     end
     return fail_count >= conf.ip_ban_threshold
 end
-
+function app:calc_password_hash(password, salt)
+	if not password or not salt then
+		return ""
+	end
+	sha256:update(password..":"..salt)
+	local digest = sha256:final()
+	local ret = str.to_hex(digest)
+	return ret
+end
 function app:attempt_login(login, password)
     local MINCR = self.redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
     if not login or not password then
@@ -70,9 +78,23 @@ function app:attempt_login(login, password)
         return _, "This account is locked."
     end
 
+	ngx.log(ngx.ERR, "** user is: ", user.login)
+	-- TODO: update failed count
+	if not user then
+        return _, "Wrong username or password"
+	end
+
     local kip  = self:key_ip(ngx.var.remote_addr)
     local kuser_fail = self:key_user_fail(login)
-    if user and user.password == password then
+	local x = self:calc_password_hash(password, user.salt)
+	local y = user.password
+	ngx.log(ngx.ERR, "** calc password hash: ", self:calc_password_hash(password, user.salt))
+	ngx.log(ngx.ERR, "**     green password: ", user.password)
+	-- ngx.log(ngx.ERR, "** check: ", "x"..user.password.."x" == "x"..self:calc_password_hash(password, user.salt).."x")
+	-- ngx.log(ngx.ERR, "** check: ", x == tostring(self:calc_password_hash(password, user.salt)))
+	-- ngx.log(ngx.ERR, "** check: ", tostring(user.password) == y)
+	-- ngx.log(ngx.ERR, "** check: ", x == y)
+    if user.password == self:calc_password_hash(password, user.salt) then
         local klast = self:key_last(login)
         local knext_last = self:key_next_last(login)
         pcall(self.redis:rename(knext_last, klast))
