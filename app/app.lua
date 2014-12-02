@@ -17,7 +17,9 @@ end
 
 function app:get_ip()
 	local ip = ngx.var.remote_addr
-	local xff = ngx.req.get_headers().x_forwarded_for
+	-- ざっと先頭だけ採用
+	local xffs = ngx.req.get_headers().x_forwarded_for
+	local xff = string.match(xffs, "(.-)%,")
 	if xff and ip == conf.localhost then
 		return xff
 	end
