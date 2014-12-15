@@ -2,6 +2,13 @@ local app = {
     redis = nil
 }
 
+-- local
+function split(str, del)
+	p, nrep = str:gsub("%s*"..del.."%s*", "")
+	return { str:match((("%s*(.-)%s*"..del.."%s*"):rep(nrep).."(.*)")) }
+end
+
+-- class
 function app:start(_host,_port)
     self.redis = resty_redis:new()
 
@@ -14,14 +21,11 @@ function app:start(_host,_port)
         return ngx.exit(500)
     end
 end
-
 function app:get_ip()
 	local ip = ngx.var.remote_addr
-	-- ざっと先頭だけ採用
 	local xffs = ngx.req.get_headers().x_forwarded_for
-	local xff = string.match(xffs, "(.-)%,")
-	if xff and ip == conf.localhost then
-		return xff
+	if xffs ~= nil  and ip == conf.localhost then
+		ip = split(xffs, ",")[1]
 	end
 	return ip
 end
@@ -80,7 +84,7 @@ function app:current_user(login)
 	if not self.redis:hget(self:key_user(login), "login") then
 		return false
 	end
-	return true
+	return login
 end
 function app:attempt_login(login, password)
     local MINCR = self.redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
