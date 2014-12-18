@@ -50,5 +50,5 @@ __clean:
 	test -d $(PWD)/bin || rm -rf $(PWD)/bin
 
 start-redis:
-	redis-server redis.conf
+	redis-server redis.conf >/tmp/isucon/logs/redis.log 2>&1 &
 

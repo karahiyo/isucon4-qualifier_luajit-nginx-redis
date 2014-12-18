@@ -48,7 +48,7 @@ fork {
 
   ths << Thread.new do
     userfails.each_slice(1000) do |pairs|
-      Redis.current.mset(*pairs.flat_map {|v, c| ["isu4:userfail:#{v}", c] })
+      Redis.current.mset(*pairs.flat_map {|v, c| ["isu4:user_fail:#{v}", c] })
     end
     puts " * userfail"
   end

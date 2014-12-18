@@ -89,8 +89,8 @@ func (s *Scenario) Play(w *Worker) error {
 			return w.Fail(
 				res.Request,
 				fmt.Errorf(
-					"Expected location is miss match %s, got: %s",
-					s.ExpectedLocation, res.Request.URL.Path,
+					"Expected location is miss match %s, got: %s, request method: %s, request path: %s",
+					s.ExpectedLocation, res.Request.URL.Path, s.Method, s.Path,
 				))
 		}
 	}
@@ -130,7 +130,7 @@ func (s *Scenario) Play(w *Worker) error {
 		}
 
 		if len(nodes) == 0 {
-			return w.Fail(res.Request, fmt.Errorf("Expected selector is not found: %s", selector))
+			return w.Fail(res.Request, fmt.Errorf("Expected selector is not found: %s, request method: %s, request method: %s", selector, s.Method, s.Path))
 		}
 
 		if nodes[0].InnerHtml() != innerHTML {
