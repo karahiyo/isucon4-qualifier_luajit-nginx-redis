@@ -1,6 +1,7 @@
 local session = require ("resty.session").start()
 -- session.cookie.domain = ""
 local redis = resty_redis:new()
+local app = require "../app/app"
 app:init_redis(redis, conf.redis.host, conf.redis.port)
 
 local login = session.data.login

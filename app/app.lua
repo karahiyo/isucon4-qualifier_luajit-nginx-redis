@@ -2,16 +2,17 @@ local app = {
 	redis = {}
 }
 
--- local
+-- local methods
 function split(str, del)
 	p, nrep = str:gsub("%s*"..del.."%s*", "")
 	return { str:match((("%s*(.-)%s*"..del.."%s*"):rep(nrep).."(.*)")) }
 end
 
--- class
+-- class methods
 function app:init_redis(_redis, _host, _port)
     -- self.redis = resty_redis:new()
 	redis = _redis
+
     -- timeout: 1s
     redis:set_timeout(1000)
 

@@ -1,6 +1,7 @@
 local session = require ("resty.session").start()
 -- session.cookie.domain = ""
 local redis = resty_redis:new()
+local app = require "../app/app"
 
 -- get post data
 ngx.req.read_body()
