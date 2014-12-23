@@ -89,6 +89,9 @@ end
 function app:attempt_login(login, password)
     local MINCR = self.redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
 
+    local kip = self:key_ip(self:get_ip())
+    local kuser_fail = self:key_user_fail(login)
+
     if self:ip_banned() then
         ngx.log(ngx.ERR, "** ip bunned:", self:key_ip(self:get_ip()))
         self.redis:evalsha(MINCR, 2, kip, kuser_fail)
@@ -96,9 +99,6 @@ function app:attempt_login(login, password)
     end
 
     local user = self:get_user(login)
-
-    local kip = self:key_ip(self:get_ip())
-    local kuser_fail = self:key_user_fail(login)
 
 	if not user then
 		self.redis:evalsha(MINCR, 2, kip, kuser_fail)
