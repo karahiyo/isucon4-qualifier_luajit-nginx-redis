@@ -84,8 +84,6 @@ end
 function app:attempt_login(redis, login, password)
     local MINCR = redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
 
-	-- if not login or not password
-
     local kip = self:key_ip(self:get_ip())
     local kuser_fail = self:key_user_fail(login)
 
@@ -106,14 +104,8 @@ function app:attempt_login(redis, login, password)
     elseif user.password == password then
         local klast = self:key_last(login)
         local knext_last = self:key_next_last(login)
-        -- pcall(self.redis:rename(knext_last, klast))
         redis:rename(knext_last, klast)
-		--ngx.log(ngx.ERR, "---------- last", self.redis:hget(klast, "ip"))
-
 		redis:hmset(knext_last, {at=ngx.localtime(), ip=self:get_ip()})
-		--ngx.log(ngx.ERR, "---------- next last", self.redis:hget(knext_last, "ip"))
-
-        -- ngx.log(ngx.ERR, "** success login: ", ngx.localtime(), ", ", self:get_ip())
         redis:mset(kip, 0, kuser_fail, 0)
         return user.login, nil
     else
