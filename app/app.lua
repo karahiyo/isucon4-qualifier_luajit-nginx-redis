@@ -1,6 +1,4 @@
-local app = {
-	redis = {}
-}
+local app = {}
 
 -- local methods
 function split(str, del)
@@ -9,10 +7,7 @@ function split(str, del)
 end
 
 -- class methods
-function app:init_redis(_redis, _host, _port)
-    -- self.redis = resty_redis:new()
-	redis = _redis
-
+function app:init_redis(redis, _host, _port)
     -- timeout: 1s
     redis:set_timeout(1000)
 
@@ -45,14 +40,14 @@ end
 function app:key_next_last(login)
     return "isu4:next_last:"..login
 end
-function app:get_user(login)
+function app:get_user(redis, login)
     local res = redis:hgetall(self:key_user(login))
     if not res then
         return
     end
     return redis:array_to_hash(res)
 end
-function app:ip_banned()
+function app:ip_banned(redis)
     local kip = self:key_ip(self:get_ip())
     local fail_count = tonumber(redis:get(kip))
     if not fail_count then
@@ -60,7 +55,7 @@ function app:ip_banned()
     end
     return fail_count >= conf.ip_ban_threshold
 end
-function app:user_locked(login)
+function app:user_locked(redis, login)
     local kuser_fail = self:key_user_fail(login)
     local fail_count = tonumber(redis:get(kuser_fail))
     if not fail_count then
@@ -77,9 +72,8 @@ function app:calc_password_hash(password, salt)
  local ret = str.to_hex(digest)
  return ret
 end
-function app:current_user(login)
+function app:current_user(redis, login)
 	if not login then
-        ngx.log(ngx.ERR, "** return false")
 		return false
 	end
 	if not redis:hget(self:key_user(login), "login") then
@@ -87,7 +81,7 @@ function app:current_user(login)
 	end
 	return login
 end
-function app:attempt_login(login, password)
+function app:attempt_login(redis, login, password)
     local MINCR = redis:script("LOAD", "redis.call('INCR', KEYS[1]); redis.call('INCR', KEYS[2])")
 
 	-- if not login or not password
@@ -95,18 +89,18 @@ function app:attempt_login(login, password)
     local kip = self:key_ip(self:get_ip())
     local kuser_fail = self:key_user_fail(login)
 
-    if self:ip_banned() then
-        ngx.log(ngx.ERR, "** ip bunned:", self:key_ip(self:get_ip()))
+    if self:ip_banned(redis) then
+        ngx.log(ngx.ERR, "** ip banned:", self:key_ip(self:get_ip()))
         redis:evalsha(MINCR, 2, kip, kuser_fail)
         return _, "You're banned."
     end
 
-    local user = self:get_user(login)
+    local user = self:get_user(redis, login)
 
 	if not user then
 		redis:evalsha(MINCR, 2, kip, kuser_fail)
     	return _, "Wrong username or password"
-	elseif self:user_locked(login) then
+	elseif self:user_locked(redis, login) then
     	redis:evalsha(MINCR, 2, kip, kuser_fail)
     	return _, "This account is locked."
     elseif user.password == password then
@@ -124,7 +118,7 @@ function app:attempt_login(login, password)
         return user.login, _
     else
         redis:evalsha(MINCR, 2, kip, kuser_fail)
-        ngx.log(ngx.ERR, "** bunned ip count: ", kip, "=", redis:get(kip))
+        ngx.log(ngx.ERR, "** banned ip count: ", kip, "=", redis:get(kip))
         ngx.log(ngx.ERR, "** locked user count: ", kuser_fail, "=", redis:get(kuser_fail))
         return _, "Wrong username or password"
     end
