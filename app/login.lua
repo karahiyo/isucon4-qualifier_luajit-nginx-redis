@@ -1,6 +1,5 @@
 local session = require ("resty.session").start()
 -- session.cookie.domain = ""
-session.cookie.domain = ".ec2-54-65-221-166.ap-northeast-1.compute.amazonaws.com"
 local redis = resty_redis:new()
 local app = require "../app/app"
 
@@ -11,6 +10,8 @@ local args, err = ngx.req.get_post_args()
 if args then
 	app:init_redis(redis, conf.redis.host, conf.redis.port)
 	user, notice = app:attempt_login(redis, args.login, args.password)
+else
+	notice = "Wrong username or password"
 end
 
 if user then

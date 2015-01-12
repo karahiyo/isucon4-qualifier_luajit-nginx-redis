@@ -119,7 +119,7 @@ func (s *Scenario) Play(w *Worker) error {
 		}
 
 		if len(nodes) == 0 {
-			return w.Fail(res.Request, fmt.Errorf("Expected selector is not found: %s", selector))
+			return w.Fail(res.Request, fmt.Errorf("Expected selector is not found: %s, posted: %s", s.ExpectedHTML, s.PostData))
 		}
 	}
 
@@ -130,7 +130,7 @@ func (s *Scenario) Play(w *Worker) error {
 		}
 
 		if len(nodes) == 0 {
-			return w.Fail(res.Request, fmt.Errorf("Expected selector is not found: %s, request method: %s, request method: %s", selector, s.Method, s.Path))
+			return w.Fail(res.Request, fmt.Errorf("Expected selector is not found: %s, posted: %s,  request method: %s, request path: %s", s.ExpectedHTML, s.PostData, s.Method, s.Path))
 		}
 
 		if nodes[0].InnerHtml() != innerHTML {
